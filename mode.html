@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body {
+        /* background: red; */
+        height: 100vh;
+        margin: 0;
+        box-sizing: border-box;
+
+    }
+
+    body,
+    #regOrg,
+    div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #regOrg,
+    div {
+        flex-direction: column;
+        /* font-size: 2rem; */
+    }
+
+    input {
+        font-size: 1.4rem;
+    }
+</style>
+
+<body>
+
+    <!--      validate       -->
+    <!-- <div class="ismode">
+        <input type="text" placeholder="" id="sw1">
+        <input type="text" placeholder="" id="sw2">
+        <button onclick="send()">send</button>
+    </div>
+
+
+    <script>
+        async function send() {
+            let d = await fetch('/mode', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    sw1: document.querySelector('#sw1').value,
+                    sw2: document.querySelector('#sw2').value
+                })
+            })
+        }
+    </script> -->
+
+
+    <div id="regOrg">
+        <h1>register organization</h2>
+            <input type="text" placeholder="userName" id="userName">
+            <input type="text" placeholder="name" id="name">
+
+            <input type="text" placeholder="em" id="em">
+            <input type="text" placeholder="pw" id="pw">
+            <!-- <input type="text" placeholder="bio" id="bio"> -->
+            <input type="file" placeholder="avatar" id="img">
+            <button id="regOrgBtn">register org</button>
+    </div>
+    <div>
+        <textarea name="bio" id="bio" cols="30" rows="10"
+            placeholder="bio; have to insert ',' between each item"></textarea>
+        <textarea name="locationsOfService" id="locationsOfService" cols="30" rows="10"
+            placeholder="locations of service; have to insert ',' between each item"></textarea>
+        <textarea name="members" id="members" cols="30" rows="10"
+            placeholder="members; have to insert ',' between each item"></textarea>
+        <!-- <textarea name="bio" id="bio" cols="30" rows="10"></textarea> -->
+    </div>
+
+
+
+    <script>
+        console.log("mode")
+
+        ////main DOM element to deal with
+        let regOrg = document.querySelector("#regOrg")
+        let userName = document.querySelector("#userName")
+        let name = document.querySelector("#name")
+        let bio = document.querySelector("#bio")
+        let em = document.querySelector("#em")
+        let pw = document.querySelector("#pw")
+
+
+        let locationsOfServ = document.querySelector("#locationsOfService")
+        let memb = document.querySelector("#members")
+
+        let img = document.querySelector("#img")
+        let regOrgBtn = document.querySelector("#regOrgBtn")
+
+
+        regOrgBtn.addEventListener("click", async () => {
+
+            console.log("clicking on the regOrg")
+
+            if (img.files[0] && userName.value && name.value && em.value, pw.value && bio.value) {
+
+                ////set the info; 
+                let locationsOfService = locationsOfServ.value.split(",")
+                let members = memb.value.split(",")
+
+                let fd = new FormData()
+                fd.append("img", img.files[0])
+                fd.append("userName", userName.value)
+                fd.append("name", name.value)
+                fd.append("bio", bio.value)
+                fd.append("em", em.value)
+                fd.append("pw", pw.value)
+                fd.append("locationsOfService", locationsOfService)
+                fd.append("members", members)
+
+                //send data; 
+                fetch("/regOrg", {
+                    method: "POST",
+                    body: fd
+                })
+
+                img.files[0] = null
+                userName.value = ""
+                name.value = ""
+                em.value = ""
+                pw.value = ""
+                bio.value = ""
+                locationsOfServ.value = ""
+                memb.value = ""
+            }
+        })
+    </script>
+</body>
+
+</html>
